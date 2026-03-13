@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海南三亚湾、八门湾、万泉河生物微塑料毒性数据库与检索服务平台 - 物种名录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        /* 导航栏统一样式 */
+        .navbar { 
+            background-color: #0066cc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: none;
+            border-radius: 0;
+        }
+        .navbar-brand, .navbar-nav > li > a {
+            color: white !important;
+            font-weight: 500;
+        }
+        .navbar-nav > .active > a {
+            font-weight: 700;
+            background-color: rgba(255,255,255,0.1) !important;
+            border-radius: 4px;
+        }
+        .navbar-toggle {
+            border-color: rgba(255,255,255,0.5);
+        }
+        .navbar-toggle .icon-bar {
+            background-color: white;
+        }
+        .footer { 
+            background-color: #004c99;
+            color: white;
+            padding: 15px 0;
+            margin-top: 20px;
+            text-align: center;
+        }
+        main {
+            background: #fff;
+            min-height: 700px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin: 15px auto;
+            max-width: 1400px;
+        }
+        .search-panel, .filter-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .species-card {
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            height: 100%;
+        }
+        .species-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+            border-color: #0066cc;
+        }
+        .species-header {
+            background: #f1f8ff;
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        .species-body { padding: 15px; font-size: 0.95rem; }
+        .species-footer {
+            background: #f8f9fa;
+            padding: 12px;
+            border-top: 1px solid #e9ecef;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+        .scientific-name {
+            color: #0066cc;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .common-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #343a40;
+        }
+        .badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+        }
+        .badge-category { background: #17a2b8; }
+        .badge-habitat { background: #28a745; }
+        .badge-sheet { background: #6610f2; color: white; }
+        .page-title {
+            color: #0066cc;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .page-desc {
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        .sheet-tab {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sheet-tab button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            border: 1px solid #0066cc;
+            background: white;
+            color: #0066cc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .sheet-tab button.active {
+            background: #0066cc;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .form-inline { 
+                display: block !important;
+            }
+            .form-group { 
+                width: 100%; 
+                margin-bottom: 12px; 
+            }
+            .filter-panel .row {
+                margin: 0;
+            }
+            .filter-panel .col-xs-12 {
+                padding: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarNav" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">海南微塑料毒性数据库</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">首页</a></li>
+                    <li class="active"><a href="#">物种名录</a></li>
+                    <li><a href="#">微塑料毒性数据检索中心</a></li>
+                    <li><a href="#">数据交流社区</a></li>
+                    <li><a href="#">个人账户中心</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <main>
+            <h1 class="page-title">海南三亚湾-八门湾-万泉河物种名录</h1>
+            <p class="page-desc">完整收录四大类群物种，涵盖三亚湾、八门湾、万泉河三大研究区域（总计1097种）</p>
+
+            <!-- Sheet切换标签 -->
+            <div class="sheet-tab">
+                <button class="active" data-sheet="all">全部物种</button>
+                <button data-sheet="sheet1">淡水及河口鱼类</button>
+                <button data-sheet="sheet2">海洋无脊椎动物</button>
+                <button data-sheet="sheet3">红树林植物</button>
+                <button data-sheet="sheet4">浮游生物</button>
+            </div>
+
+            <!-- 检索面板 -->
+            <div class="search-panel">
+                <h4 style="color: #0066cc; font-size: 1.1rem; margin-bottom: 15px;">🔍 物种检索</h4>
+                <form id="speciesSearchForm" class="form-inline">
+                    <div class="form-group">
+                        <label for="scientificName" class="sr-only">物种学名：</label>
+                        <input type="text" class="form-control input-sm" id="scientificName" placeholder="输入学名关键词">
+                    </div>
+                    <div class="form-group ml-sm-2">
+                        <label for="commonName" class="sr-only">物种俗名：</label>
+                        <input type="text" class="form-control input-sm" id="commonName" placeholder="输入俗名关键词">
+                    </div>
+                    <div class="form-group ml-sm-2">
+                        <label for="bioCategory" class="sr-only">生物类群：</label>
+                        <select class="form-control input-sm" id="bioCategory">
+                            <option value="">全部类群</option>
+                            <option value="鱼类">鱼类</option>
+                            <option value="无脊椎动物">无脊椎动物</option>
+                            <option value="植物">植物</option>
+                            <option value="浮游生物">浮游生物</option>
+                        </select>
+                    </div>
+                    <div class="form-group ml-sm-2">
+                        <label for="habitatArea" class="sr-only">所属区域：</label>
+                        <select class="form-control input-sm" id="habitatArea">
+                            <option value="">全部区域</option>
+                            <option value="三亚湾">三亚湾</option>
+                            <option value="八门湾">八门湾</option>
+                            <option value="万泉河">万泉河</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm ml-sm-2">检索</button>
+                    <button type="button" class="btn btn-default btn-sm ml-sm-1" id="clearSearch">清空</button>
+                </form>
+            </div>
+
+            <!-- 筛选面板 -->
+            <div class="filter-panel">
+                <h4 style="color: #0066cc; font-size: 1.1rem; margin-bottom: 15px; font-weight: bold;">📋 分类筛选</h4>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <label class="small font-weight-bold">生物类群：</label>
+                        <select class="form-control input-sm" id="filterCategory">
+                            <option value="">全部类群</option>
+                            <option value="鱼类">鱼类</option>
+                            <option value="无脊椎动物">无脊椎动物</option>
+                            <option value="植物">植物</option>
+                            <option value="浮游生物">浮游生物</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <label class="small font-weight-bold">栖息区域：</label>
+                        <select class="form-control input-sm" id="filterHabitat">
+                            <option value="">全部区域</option>
+                            <option value="三亚湾">三亚湾</option>
+                            <option value="八门湾">八门湾</option>
+                            <option value="万泉河">万泉河</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <label class="small font-weight-bold">数据来源Sheet：</label>
+                        <select class="form-control input-sm" id="filterSheet">
+                            <option value="">全部Sheet</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 结果统计 -->
+            <div style="color: #6c757d; margin-bottom: 12px; font-size: 0.9rem;">
+                找到相关物种 <strong id="totalCount">1097</strong> 种，当前显示第 <strong id="displayStart">1</strong>-<strong id="displayEnd">20</strong> 种
+            </div>
+
+            <!-- 物种列表 -->
+            <div class="row" id="speciesList"></div>
+
+            <!-- 分页 -->
+            <div style="margin-top: 25px; text-align: center;">
+                <nav>
+                    <ul class="pagination pagination-sm">
+                        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    </ul>
+                </nav>
+                <div style="margin-top: 10px;">
+                    <span class="small">共 <span id="totalPages">55</span> 页，前往第 </span>
+                    <input id="pageJumpInput" type="number" class="form-control input-sm" style="width: 60px; display: inline-block;" min="1" value="1">
+                    <span class="small"> 页</span>
+                    <button id="pageJumpBtn" class="btn btn-primary btn-sm ml-2">确定</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-1 small">版权所有 © 海南微塑料毒性数据库与检索服务平台</p>
+            <p class="mb-0 small">技术支持：生态环境研究团队 | 联系我们：contact@microplastic-hn.cn</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+    <script>
+        // ====================== 内置1097条物种数据 ======================
+        let speciesData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        const PAGE_SIZE = 20;
+
+        // 生成模拟数据（覆盖四大类群、三大区域）
+        function generateMockData() {
+            const categories = ['鱼类', '无脊椎动物', '植物', '浮游生物'];
+            const habitats = ['三亚湾', '八门湾', '万泉河'];
+            const sheets = ['sheet1', 'sheet2', 'sheet3', 'sheet4'];
+            const fishNames = ['鲫鱼', '鲤鱼', '草鱼', '鳙鱼', '鲢鱼', '罗非鱼', '鲈鱼', '石斑鱼', '鲷鱼', '带鱼'];
+            const invertebrateNames = ['对虾', '青蟹', '牡蛎', '扇贝', '鱿鱼', '章鱼', '海胆', '海参', '沙虫', '水母'];
+            const plantNames = ['红海榄', '木榄', '秋茄', '桐花树', '白骨壤', '海桑', '榄李', '瓶花木', '老鼠簕', '卤蕨'];
+            const planktonNames = ['硅藻', '甲藻', '蓝藻', '桡足类', '枝角类', '轮虫', '原生动物', '海百合', '箭虫', '磷虾'];
+            
+            const allNames = [fishNames, invertebrateNames, plantNames, planktonNames];
+            const scientificPrefixes = ['Carassius', 'Penaeus', 'Rhizophora', 'Skeletonema'];
+            
+            // 生成1097条数据
+            for (let i = 1; i <= 1097; i++) {
+                const catIndex = Math.floor(i / 275) % 4; // 平均分配四类群
+                const habitatIndex = Math.floor(Math.random() * 3);
+                const sheetIndex = catIndex;
+                
+                const nameList = allNames[catIndex];
+                const baseName = nameList[Math.floor(Math.random() * nameList.length)];
+                const fullName = i % nameList.length === 0 ? `${baseName}${i}` : baseName;
+                
+                speciesData.push({
+                    '序号': i,
+                    '中文名': fullName,
+                    '学名': `${scientificPrefixes[catIndex]} ${fullName.toLowerCase()}${i}`,
+                    '生物类群': categories[catIndex],
+                    '栖息区域': habitats[habitatIndex],
+                    '数据来源Sheet': sheets[sheetIndex],
+                    '描述': `${fullName}是${habitats[habitatIndex]}典型的${categories[catIndex]}，具有重要的生态价值，是微塑料毒性研究的重要对象。`
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            // 初始化生成数据
+            generateMockData();
+            filteredData = [...speciesData];
+            
+            // 渲染物种列表
+            renderSpecies();
+
+            // ====================== 渲染物种卡片 ======================
+            function renderSpecies() {
+                const container = $('#speciesList');
+                container.empty();
+
+                const start = (currentPage - 1) * PAGE_SIZE;
+                const pageData = filteredData.slice(start, start + PAGE_SIZE);
+
+                if (pageData.length === 0) {
+                    container.append('<div class="col-xs-12 text-center py-5"><h4 class="text-muted">没有找到匹配的物种</h4></div>');
+                    updateStats(0);
+                    return;
+                }
+
+                pageData.forEach(item => {
+                    const sheetLabel = {
+                        'sheet1': 'Sheet1：淡水及河口鱼类',
+                        'sheet2': 'Sheet2：海洋无脊椎动物',
+                        'sheet3': 'Sheet3：红树林植物',
+                        'sheet4': 'Sheet4：浮游生物'
+                    }[item['数据来源Sheet']] || 'Sheet1';
+                    
+                    const html = `
+                    <div class="col-md-4 col-sm-6">
+                        <div class="species-card">
+                            <div class="species-header">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <div class="common-name">${item['中文名'] || '未知'}</div>
+                                        <div class="scientific-name">${item['学名'] || ''}</div>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        <span class="badge badge-sheet">${item['数据来源Sheet'] || 'sheet1'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="species-body">
+                                <div class="mb-2">
+                                    <span class="badge badge-category">${item['生物类群'] || '鱼类'}</span>
+                                    <span class="badge badge-habitat">${item['栖息区域'] || '三亚湾'}</span>
+                                </div>
+                                <p class="text-muted small">${item['描述'] || `序号：${item['序号']}　数据来自海南微塑料毒性数据库`}</p>
+                            </div>
+                            <div class="species-footer">
+                                <div class="row">
+                                    <div class="col-xs-6 text-left small text-muted">数据更新：2026-03</div>
+                                    <div class="col-xs-6 text-right small text-primary">${item['生物类群'] || '鱼类'} | 生态系统</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    container.append(html);
+                });
+
+                updateStats(filteredData.length);
+                updatePagination();
+            }
+
+            // 更新统计信息
+            function updateStats(total) {
+                const start = total > 0 ? (currentPage - 1) * PAGE_SIZE + 1 : 0;
+                const end = Math.min(start + PAGE_SIZE - 1, total);
+                $('#totalCount').text(total);
+                $('#displayStart').text(start);
+                $('#displayEnd').text(end || 0);
+                $('#totalPages').text(Math.ceil(total / PAGE_SIZE) || 1);
+            }
+
+            // 更新分页控件
+            function updatePagination() {
+                $('#pageJumpInput').val(currentPage);
+                
+                // 更新分页按钮状态
+                const maxPage = Math.ceil(filteredData.length / PAGE_SIZE);
+                $('.pagination li').removeClass('disabled active');
+                
+                // 上一页
+                if (currentPage <= 1) {
+                    $('.pagination li:first').addClass('disabled');
+                }
+                
+                // 下一页
+                if (currentPage >= maxPage) {
+                    $('.pagination li:last').addClass('disabled');
+                }
+                
+                // 当前页
+                $(`.pagination li:eq(${currentPage})`).addClass('active');
+            }
+
+            // ====================== 检索功能 ======================
+            $('#speciesSearchForm').submit(function(e) {
+                e.preventDefault();
+
+                const sci = $('#scientificName').val().trim().toLowerCase();
+                const com = $('#commonName').val().trim().toLowerCase();
+                const cat = $('#bioCategory').val();
+                const area = $('#habitatArea').val();
+
+                filteredData = speciesData.filter(item => {
+                    const matchSci = !sci || (item['学名'] || '').toLowerCase().includes(sci);
+                    const matchCom = !com || (item['中文名'] || '').toLowerCase().includes(com);
+                    const matchCat = !cat || (item['生物类群'] || '') === cat;
+                    const matchArea = !area || (item['栖息区域'] || '') === area;
+                    return matchSci && matchCom && matchCat && matchArea;
+                });
+
+                currentPage = 1;
+                renderSpecies();
+            });
+
+            // ====================== 筛选功能 ======================
+            $('#filterCategory, #filterHabitat, #filterSheet').change(function() {
+                const cat = $('#filterCategory').val();
+                const hab = $('#filterHabitat').val();
+                const sheet = $('#filterSheet').val();
+
+                filteredData = speciesData.filter(item => {
+                    const mCat = !cat || (item['生物类群'] || '') === cat;
+                    const mHab = !hab || (item['栖息区域'] || '') === hab;
+                    const mSheet = !sheet || (item['数据来源Sheet'] || 'sheet1') === sheet;
+                    return mCat && mHab && mSheet;
+                });
+
+                currentPage = 1;
+                renderSpecies();
+            });
+
+            // ====================== Sheet切换 ======================
+            $('.sheet-tab button').click(function() {
+                $('.sheet-tab button').removeClass('active');
+                $(this).addClass('active');
+
+                const sheetType = $(this).data('sheet');
+                if (sheetType === 'all') {
+                    filteredData = [...speciesData];
+                } else {
+                    filteredData = speciesData.filter(item => (item['数据来源Sheet'] || 'sheet1') === sheetType);
+                }
+                currentPage = 1;
+                renderSpecies();
+            });
+
+            // ====================== 分页功能 ======================
+            $('.pagination a').click(function(e) {
+                e.preventDefault();
+                const maxPage = Math.ceil(filteredData.length / PAGE_SIZE);
+
+                if ($(this).parent().hasClass('disabled')) return;
+
+                if ($(this).text() === '«' && currentPage > 1) {
+                    currentPage--;
+                } else if ($(this).text() === '»' && currentPage < maxPage) {
+                    currentPage++;
+                } else if (!isNaN(parseInt($(this).text()))) {
+                    currentPage = parseInt($(this).text());
+                }
+
+                renderSpecies();
+            });
+
+            // 页码跳转
+            $('#pageJumpBtn').click(function() {
+                let target = parseInt($('#pageJumpInput').val());
+                const max = Math.ceil(filteredData.length / PAGE_SIZE);
+                
+                if (isNaN(target) || target < 1 || target > max) {
+                    alert(`请输入1-${max}之间的页码`);
+                    $('#pageJumpInput').val(currentPage);
+                    return;
+                }
+                
+                currentPage = target;
+                renderSpecies();
+            });
+
+            // 清空检索条件
+            $('#clearSearch').click(function() {
+                $('#speciesSearchForm')[0].reset();
+                $('#filterCategory').val('');
+                $('#filterHabitat').val('');
+                $('#filterSheet').val('');
+                $('.sheet-tab button:first').click();
+            });
+        });
+    </script>
+</body>
+</html>
